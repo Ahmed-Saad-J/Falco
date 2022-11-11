@@ -40,11 +40,9 @@ public class PlayerLocomotion : MonoBehaviour
         float delta = Time.deltaTime;
         inputHandler.TickInput(delta);
 
-
         moveDirection = cameraObject.forward * inputHandler.vertical;
         moveDirection += cameraObject.right * inputHandler.horizontal;
         moveDirection.Normalize();
-        moveDirection.y = 0;
 
         float speed = movementSpeed;
         moveDirection *= speed;
@@ -79,7 +77,7 @@ public class PlayerLocomotion : MonoBehaviour
         float speed = rotationSpeed;
 
         Quaternion tempTargetRotation = Quaternion.LookRotation(targetDir);
-        Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tempTargetRotation, speed*delta);
+        Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tempTargetRotation, rotationSpeed*delta);
         myTransform.rotation = targetRotation;
     }
 

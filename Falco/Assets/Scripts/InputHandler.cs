@@ -11,30 +11,14 @@ using UnityEngine;
     public float moveAmount;
     PlayerControls InputActions;
     Vector2 MovementInput;
-    Vector2 cameraInput;
-
-    CameraHandler cameraHandler;
-
-    private void Awake()
-    {
-        cameraHandler = CameraHandler.singlton;
-    }
-    private void FixedUpdate()
-    {
-        float delta = Time.fixedDeltaTime;
-        if(cameraHandler != null)
-        {
-            cameraHandler.FollowTarget(delta);
-            cameraHandler.HandleCameraRot(delta,mouseX,mouseY);
-        }
-    }
+    Vector2 CameraInput;
     public void OnEnable()
     {
         if (InputActions == null)
         {
         InputActions = new PlayerControls();
         InputActions.PlayerMovement.Movement.performed += InputActions => MovementInput = InputActions.ReadValue<Vector2>();
-        InputActions.PlayerMovement.Camera.performed += I =>cameraInput = I.ReadValue<Vector2>();
+        InputActions.PlayerMovement.Camera.performed += I => I.ReadValue<Vector2>();
         }
         InputActions.Enable();
     }
@@ -51,10 +35,10 @@ using UnityEngine;
         horizontal = MovementInput.x;
         vertical = MovementInput.y;
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
-        mouseX = cameraInput.x;
-        mouseY = cameraInput.y;
+        mouseX = CameraInput.x;
+        mouseY = CameraInput.y;
     }
- 
+
 
     }
 
